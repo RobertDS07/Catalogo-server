@@ -26,9 +26,17 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/', async (req, res) => {
-    const produtos = await Produtos.find().sort({'preço': 'desc'})
+    const findIt = req.body.tipo
+    const exactsProducts = await Produtos.find({ tipo: req.body.tipo }).sort({})
+    const products = await Produtos.find().sort({})
 
-    res.send(produtos)
+    findIt ? res.send(exactsProducts) : res.send(products)
+
+})
+
+app.get('/tipos', async (req, res) => {
+    const itens = await Produtos.distinct('tipo')
+    res.send(itens)
 })
 
 app.post('/auth', async (req, res) => {
@@ -48,8 +56,6 @@ app.post('/auth', async (req, res) => {
 })
 
 app.use('/admin', adminRoute)
-
-
 
 app.listen(8081, () => {
     console.log('Listen on port 8081!')

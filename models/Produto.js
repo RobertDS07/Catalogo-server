@@ -7,6 +7,7 @@ const ProdutoSchema = new mongoose.Schema({
     },
     nome: {
         type: String,
+        uppercase: true,
         required: true
     },
     preço: {
@@ -15,6 +16,7 @@ const ProdutoSchema = new mongoose.Schema({
     },
     tamanho: {
         type: String,
+        uppercase: true
     },
     descriçao: {
         type: String,
@@ -24,6 +26,11 @@ const ProdutoSchema = new mongoose.Schema({
         required: true
     }
 }) 
+
+ProdutoSchema.pre('save', function (next) {
+    this.tipo = this.tipo.slice(0, 1).toUpperCase() + this.tipo.slice(1)
+    next()
+})
 
 const Produto = mongoose.model('Produto', ProdutoSchema)
 module.exports = Produto
