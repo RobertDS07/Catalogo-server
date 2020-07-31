@@ -41,18 +41,18 @@ app.get('/tipos', async (req, res) => {
 
 app.post('/auth', async (req, res) => {
     const { user, password } = req.body
-
+    
     const adminUser = await Admin.findOne({ user }).select('+password')
 
     if (! await bcrypt.compare(password, adminUser.password))
-        return res.send('invalid password')
+        return res.redirect('http://localhost:3000')
 
     adminUser.password = undefined
 
     const token = jwt.sign({ id: adminUser._id }, authConfig.secret, {
         expiresIn: 86400,
     })
-    res.send({ adminUser, token })
+    res.send(token).redirect('http://localhost:3000/admin/catalogo')
 })
 
 app.use('/admin', adminRoute)
