@@ -26,12 +26,8 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/', async (req, res) => {
-    const findIt = req.body.tipo
-    const exactsProducts = await Produtos.find({ tipo: req.body.tipo }).sort({})
     const products = await Produtos.find().sort({})
-
-    findIt ? res.send(exactsProducts) : res.send(products)
-
+    res.send(products)
 })
 
 app.get('/tipos', async (req, res) => {
@@ -44,15 +40,15 @@ app.post('/auth', async (req, res) => {
     
     const adminUser = await Admin.findOne({ user }).select('+password')
 
-    if (! await bcrypt.compare(password, adminUser.password))
-        return res.redirect('http://localhost:3000')
+    if (! adminUser || ! await bcrypt.compare(password, adminUser.password) )
+        return res.status(401).send()
 
     adminUser.password = undefined
 
     const token = jwt.sign({ id: adminUser._id }, authConfig.secret, {
         expiresIn: 86400,
     })
-    res.send(token).redirect('http://localhost:3000/admin/catalogo')
+    res.send(token)
 })
 
 app.use('/admin', adminRoute)
