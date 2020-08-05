@@ -46,8 +46,13 @@ router.post('/delete', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
+        for (const [key, value] of Object.entries(req.body)) {
+            if(value == ''){
+                delete req.body[key]
+            }
+          }
         await Produto.findByIdAndUpdate(req.body.id, req.body)
-        res.redirect('http://localhost:3000/admin/catalogo')
+        return res.redirect('http://localhost:3000/admin/catalogo')
     } catch(err) { console.error(err) }
 })
 

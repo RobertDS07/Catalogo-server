@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/', async (req, res) => {
-    const products = await Produtos.find().sort({})
+    const products = await Produtos.find().sort('tipo')
     res.send(products)
 })
 
