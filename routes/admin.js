@@ -18,7 +18,7 @@ router.use(authMiddleware)
 
 router.post('/', async (req, res) => {
     try {
-        const produtos = await Produto.find().sort({ 'preço': 'asc' })
+        const produtos = await Produto.find().sort(req.body.sort)
 
         res.send(produtos)
     } catch (err) { console.error(err) }
