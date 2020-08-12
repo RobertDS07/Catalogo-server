@@ -27,6 +27,7 @@ app.use(cors())
 
 app.post('/', async (req, res) => {
     const products = await Produtos.find().sort(req.body.sort)
+
     res.send(products)
 })
 
