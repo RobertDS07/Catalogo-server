@@ -3,7 +3,7 @@ const Produto = require('../models/Produto')
 
 const authMiddleware = require('../middlewares/auth')
 
-
+// tudo passa pelo middleware antes de ir para as outras rotas 
 router.use(authMiddleware)
 
 // router.post('/', async (req, res) => {
@@ -46,6 +46,7 @@ router.post('/delete', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
+        // aqui eu estou pegando tudo que o usuario enviou da parte de editar produtos, e como ele envia tudo de uma vez eu optei por tratar isso aqui no back, desse jeito todos os valores vazios serão deletados para no final passar apenas os que o usuario realment quer alterar 
         for (const [key, value] of Object.entries(req.body)) {
             if(value == ''){
                 delete req.body[key]

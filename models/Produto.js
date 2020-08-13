@@ -27,6 +27,7 @@ const ProdutoSchema = new mongoose.Schema({
     }
 }) 
 
+// gambiarrazinha pois não achei um capitalize do mongoose... devo ter pesquisado errado não é possivel não existir
 ProdutoSchema.pre('save', function (next) {
     this.tipo = this.tipo.slice(0, 1).toUpperCase() + this.tipo.slice(1)
     next()
