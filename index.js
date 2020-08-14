@@ -57,6 +57,6 @@ app.post('/auth', async (req, res) => {
 
 app.use('/admin', adminRoute)
 
-app.listen(8081, () => {
+app.listen(process.env.PORT || 8081, () => {
     console.log('Listen on port 8081')
 })
