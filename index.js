@@ -5,15 +5,18 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
 
 const adminRoute = require('./routes/admin')
 const Admin = require('./models/userAdmin')
 const authConfig = require('./config/auth.json')
 const Produtos = require('./models/Produto')
 
+dotenv.config()
+
 mongoose.Promise = global.Promise
 mongoose.set('useFindAndModify', false)
-mongoose.connect('mongodb://localhost/catalogo', {
+mongoose.connect(`mongodb+srv://admin:${process.env.DB_PASSWORD}@cluster0.wfftg.gcp.mongodb.net/DDC?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -55,5 +58,5 @@ app.post('/auth', async (req, res) => {
 app.use('/admin', adminRoute)
 
 app.listen(8081, () => {
-    console.log('Listen on port 8081!')
+    console.log('Listen on port 8081')
 })

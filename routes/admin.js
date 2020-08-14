@@ -6,7 +6,7 @@ const authMiddleware = require('../middlewares/auth')
 // tudo passa pelo middleware antes de ir para as outras rotas 
 router.use(authMiddleware)
 
-// router.post('/', async (req, res) => {
+// app.post('/createAdmin', async (req, res) => {
 //     try {
 //         const admin = await Admin.create(req.body)
 
@@ -33,14 +33,14 @@ router.post('/add', async (req, res) => {
     try {
         const produto = await Produto.create(req.body)
 
-        return res.redirect('http://localhost:3000/admin/catalogo')
+        return res.redirect(process.env.URL_SITE_FRONT)
     } catch (err) { console.error(err) }
 })
 
 router.post('/delete', async (req, res) => {
     try {
         await Produto.deleteOne({ _id: req.body.id })
-        return res.redirect('http://localhost:3000/admin/catalogo')
+        return res.redirect(process.env.URL_SITE_FRONT)
     } catch (err) { console.error(err) }
 })
 
@@ -53,7 +53,7 @@ router.post('/update', async (req, res) => {
             }
           }
         await Produto.findByIdAndUpdate(req.body.id, req.body)
-        return res.redirect('http://localhost:3000/admin/catalogo')
+        return res.redirect(process.env.URL_SITE_FRONT)
     } catch(err) { console.error(err) }
 })
 
