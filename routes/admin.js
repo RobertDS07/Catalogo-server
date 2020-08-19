@@ -24,11 +24,6 @@ router.post('/', async (req, res) => {
     } catch (err) { console.error(err) }
 })
 
-router.post('/tipos', async (req, res) => {
-    const itens = await Produto.distinct('tipo')
-    res.send(itens)
-})
-
 router.post('/add', async (req, res) => {
     try {
         const produto = await Produto.create(req.body)
