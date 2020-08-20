@@ -5,14 +5,11 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv')
 
 const adminRoute = require('./routes/admin')
 const Admin = require('./models/userAdmin')
 const authConfig = require('./config/auth.json')
 const Produtos = require('./models/Produto')
-
-dotenv.config()
 
 mongoose.Promise = global.Promise
 mongoose.set('useFindAndModify', false)
@@ -28,7 +25,7 @@ app.use(bodyParser.json())
 
 app.use(cors())
 
-app.post('/', async (req, res) => {
+app.get('/', async (req, res) => {
     const products = await Produtos.find().sort(req.body.sort)
 
     res.send(products)
@@ -45,7 +42,7 @@ app.post('/auth', async (req, res) => {
     const adminUser = await Admin.findOne({ user }).select('+password')
 
     if (! adminUser || ! await bcrypt.compare(password, adminUser.password) )
-        return res.status(401).send()
+        return res.send(401)
 
     adminUser.password = undefined
 

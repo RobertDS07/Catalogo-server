@@ -16,7 +16,7 @@ router.use(authMiddleware)
 //     }
 // })
 
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const produtos = await Produto.find().sort(req.body.sort)
 
