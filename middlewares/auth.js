@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
 
     // verificando o token, junto com a secret (sem a secret não vai obviamente)
     jwt.verify(authHeader, authConfig.secret, (err, decoded) => {
-        if (err) return res.send(401)
+        if (err) return res.sendStatus(401)
 
         return next()
     })

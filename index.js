@@ -42,7 +42,7 @@ app.post('/auth', async (req, res) => {
     const adminUser = await Admin.findOne({ user }).select('+password')
 
     if (! adminUser || ! await bcrypt.compare(password, adminUser.password) )
-        return res.send(401)
+        return res.sendStatus(401)
 
     adminUser.password = undefined
 
