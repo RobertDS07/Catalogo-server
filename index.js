@@ -5,10 +5,11 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+// require('dotenv').config()
 
 const adminRoute = require('./routes/admin')
 const Admin = require('./models/userAdmin')
-const authConfig = require('./config/auth.json')
+const authConfig = require('./config/authSECRET.js')
 const Produtos = require('./models/Produto')
 
 mongoose.Promise = global.Promise

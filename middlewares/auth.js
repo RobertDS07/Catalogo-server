@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const authConfig = require('../config/auth.json')
+const authConfig = require('../config/authSECRET')
 
 // middleware para verificar se a requisição vem do admin 
 module.exports = (req, res, next) => {
